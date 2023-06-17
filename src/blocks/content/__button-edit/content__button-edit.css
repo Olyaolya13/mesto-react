@@ -1,0 +1,22 @@
+.content__button-edit {
+  background: url(../../../images/logo/editButton.svg) no-repeat center;
+  background-size: contain;
+  border: none;
+  width: 24px;
+  height: 24px;
+  transition: 0.3s ease-in-out 0.1s;
+  margin-left: 14px;
+}
+.content__button-edit:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media (max-width: 885px) {
+  .content__button-edit {
+    width: 18px;
+    height: 18px;
+    padding-left: 11px;
+    margin-left: 11px;
+  }
+}

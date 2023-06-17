@@ -1,0 +1,26 @@
+.content__subtitle {
+  color: #fff;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.21em;
+  margin-top: 8px;
+  width: 300px;
+  /*Реализовация переполнение блока с появляющимся многоточием в конце*/
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media (max-width: 885px) {
+  .content__subtitle {
+    font-size: 14px;
+    width: 200px;
+  }
+}
+
+@media (max-width: 610px) {
+  .content__subtitle {
+    text-align: center;
+  }
+}

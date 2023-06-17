@@ -1,0 +1,10 @@
+.content__name {
+  display: flex;
+  align-items: baseline;
+}
+
+@-moz-document url-prefix() {
+  .content__name {
+    align-items: center;
+  }
+}

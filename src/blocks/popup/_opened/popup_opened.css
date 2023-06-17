@@ -1,0 +1,5 @@
+.popup_opened {
+  /*показываем попап*/
+  visibility: visible;
+  opacity: 1;
+}

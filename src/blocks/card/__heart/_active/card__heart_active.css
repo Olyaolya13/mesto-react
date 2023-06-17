@@ -1,0 +1,7 @@
+.card__heart_active {
+  background: url(../../../../images/logo/black_heart.svg) no-repeat center;
+  width: 22px;
+  height: 19px;
+  border: none;
+  cursor: pointer;
+}
