@@ -1,33 +1,13 @@
 import Header from './Header/Header';
+import Main from './Main/Main';
+import Footer from './Footer/Footer';
 
 function App() {
   return (
     <>
       <Header />
-      <main>
-        <section className="content">
-          <div className="content__profile">
-            <div className="content__avatar">
-              <img src="#" alt="" className="content__photo" />
-              <div className="content__avatar-overlay" />
-            </div>
-            <div className="content__edit">
-              <div className="content__name">
-                <h1 className="content__title">Hello</h1>
-                {/*Кнопка редактирование попапа*/}
-                <button type="button" aria-label="Редактировать" className="content__button-edit" />
-              </div>
-              <p className="content__subtitle">World</p>
-            </div>
-          </div>
-          <button type="button" aria-label="Добавить" className="content__button-add" />
-        </section>
-        <section className="cards" />
-      </main>
-      <footer className="footer">
-        <p className="footer__text">© 2022 Mesto Russia</p>
-      </footer>
-      {/*Скрытый контент размещаем после footer*/}
+      <Main />
+      <Footer />
       <div className="popup profile-popup">
         {/*Фон попапа*/}
         <div className="popup__container">
