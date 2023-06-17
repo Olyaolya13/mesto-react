@@ -1,9 +1,9 @@
+import Header from './Header/Header';
+
 function App() {
   return (
     <>
-      <header className="header">
-        <div className="header__logo" />
-      </header>
+      <Header />
       <main>
         <section className="content">
           <div className="content__profile">
