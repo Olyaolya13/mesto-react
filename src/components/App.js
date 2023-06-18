@@ -1,13 +1,29 @@
 import Header from './Header/Header';
 import Main from './Main/Main';
 import Footer from './Footer/Footer';
+import PopupWithForm from './PopupWithForm/PopupWithForm';
 
 function App() {
   return (
     <>
       <Header />
+
       <Main />
+
       <Footer />
+
+      <PopupWithForm
+        name="profile-popup"
+        title="Редактировать профиль"
+        button="Сохранить"
+      ></PopupWithForm>
+
+      <PopupWithForm name="card-popup" title="Новое место" button="Создать"></PopupWithForm>
+
+      <PopupWithForm name="avatar-popup" title="Обновить аватар" button="Сохранить"></PopupWithForm>
+
+      <PopupWithForm name="question-popup" title="Вы уверены" button="Да" />
+
       <div className="popup profile-popup">
         {/*Фон попапа*/}
         <div className="popup__container">
