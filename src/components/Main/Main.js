@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../../utils/api';
+import Cards from '../Cards/Cards';
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
   const [userName, setUserName] = useState('');
@@ -59,9 +60,9 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
         />
       </section>
       <section className="cards">
-        {/* {initialCards.map(card => (
-          <Card key={card._id} card={card} />
-        ))} */}
+        {cards.map(card => (
+          <Cards key={card._id} card={card} />
+        ))}
       </section>
     </main>
   );
