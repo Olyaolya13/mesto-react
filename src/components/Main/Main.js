@@ -5,20 +5,24 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
-  //const [card,setCard] = useState('')
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    // Выполните запрос в API для получения информации о пользователе
-    api
-      .getUserInfo()
-      .then(response => {
-        const { name, about, avatar } = response;
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([userInfo, initialCards]) => {
+        const { name, about, avatar, _id } = userInfo;
         setUserName(name);
         setUserDescription(about);
         setUserAvatar(avatar);
+        // initialCards.forEach(data => (data.myid = userInfo._id));
+        const updatedCards = initialCards.map(card => ({
+          ...card,
+          id: _id
+        }));
+        setCards(updatedCards);
       })
       .catch(error => {
-        console.log('Ошибка при получении информации о пользователе:', error);
+        console.log('Ошибка при получении информации:', error);
       });
   }, []);
 
@@ -54,7 +58,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
           onClick={onAddPlace}
         />
       </section>
-      <section className="cards" />
+      <section className="cards">
+        {/* {initialCards.map(card => (
+          <Card key={card._id} card={card} />
+        ))} */}
+      </section>
     </main>
   );
 }
