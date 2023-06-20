@@ -3,7 +3,7 @@ import Main from './Main/Main';
 import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm';
 import PopupImage from './PopupImage/PopupImage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -15,6 +15,8 @@ function App() {
   const [selectedCard, setSelectedCard] = useState([]);
 
   const [isZoomPopup, setIsZoomPopup] = useState(false);
+
+  const [isQuestionPopupOpen, setIsQuestionPopupOpen] = useState(false);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -33,15 +35,53 @@ function App() {
     setIsZoomPopup(true);
   }
 
+  function handleQuestionPopupOpen() {
+    setIsQuestionPopupOpen(true);
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
-
     setIsZoomPopup(false);
+    setIsQuestionPopupOpen(false);
   }
-  // function handleDeleteCard() {}
-  // function handleCard() {}
+
+  function handleWindowCloseClick(evt) {
+    if (evt.target === evt.currentTarget) {
+      closeAllPopups();
+    }
+  }
+
+  function handleEscKey(event) {
+    if (event.key === 'Escape') {
+      closeAllPopups();
+    }
+  }
+
+  useEffect(() => {
+    if (
+      isEditProfilePopupOpen ||
+      isAddPlacePopupOpen ||
+      isEditAvatarPopupOpen ||
+      isZoomPopup ||
+      isQuestionPopupOpen
+    ) {
+      document.addEventListener('keydown', handleEscKey);
+    } else {
+      document.removeEventListener('keydown', handleEscKey);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [
+    isEditProfilePopupOpen,
+    isAddPlacePopupOpen,
+    isEditAvatarPopupOpen,
+    isZoomPopup,
+    isQuestionPopupOpen
+  ]);
 
   return (
     <>
@@ -52,6 +92,7 @@ function App() {
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
         onCardClick={handleCardClick}
+        onTrashClick={handleQuestionPopupOpen}
       />
 
       <Footer />
@@ -61,7 +102,7 @@ function App() {
         title="Редактировать профиль"
         button="Сохранить"
         isPopupOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
+        onClose={handleWindowCloseClick}
       >
         <input
           type="text"
@@ -92,7 +133,7 @@ function App() {
         title="Новое место"
         button="Создать"
         isPopupOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
+        onClose={handleWindowCloseClick}
       >
         <input
           type="text"
@@ -121,7 +162,7 @@ function App() {
         title="Обновить аватар"
         button="Сохранить"
         isPopupOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
+        onClose={handleWindowCloseClick}
       >
         <input
           type="url"
@@ -138,10 +179,11 @@ function App() {
         name="question-popup"
         title="Вы уверены"
         button="Да"
-        onClose={closeAllPopups}
+        onClose={handleWindowCloseClick}
+        isPopupOpen={isQuestionPopupOpen}
       />
 
-      <PopupImage card={selectedCard} isPopupOpen={isZoomPopup} onClose={closeAllPopups} />
+      <PopupImage card={selectedCard} isPopupOpen={isZoomPopup} onClose={handleWindowCloseClick} />
     </>
   );
 }

@@ -1,10 +1,9 @@
 function PopupWithForm({ name, title, button, children, isPopupOpen, onClose }) {
-  function handleCloseAllPopups() {
-    onClose();
-  }
-
   return (
-    <div className={`popup popup_type_${name} ${isPopupOpen ? 'popup_opened' : ''}`}>
+    <div
+      className={`popup popup_type_${name} ${isPopupOpen ? 'popup_opened' : ''}`}
+      onClick={onClose}
+    >
       <div className="popup__container">
         <h2 className="popup__title">{title}</h2>
         <form name={name} className="popup__form" noValidate="">
@@ -17,7 +16,7 @@ function PopupWithForm({ name, title, button, children, isPopupOpen, onClose }) 
           type="button"
           aria-label="Закрыть"
           className="popup__close-icon"
-          onClick={handleCloseAllPopups}
+          onClick={onClose}
         />
       </div>
     </div>

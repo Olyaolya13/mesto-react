@@ -1,4 +1,4 @@
-function Cards({ card, onCardClick }) {
+function Cards({ card, onCardClick, onTrashClick }) {
   return (
     <article className="card">
       <div
@@ -14,7 +14,7 @@ function Cards({ card, onCardClick }) {
           <span className="card__heart-count" />
         </div>
       </div>
-      <button type="button" className="card__delete" />
+      <button type="button" className="card__delete" onClick={onTrashClick} />
     </article>
   );
 }
