@@ -1,4 +1,4 @@
-function Cards({ card, onCardClick, onTrashClick }) {
+function Card({ card, onCardClick, onTrashClick }) {
   return (
     <article className="card">
       <div
@@ -19,4 +19,4 @@ function Cards({ card, onCardClick, onTrashClick }) {
   );
 }
 
-export default Cards;
+export default Card;

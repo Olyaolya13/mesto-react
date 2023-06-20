@@ -2,7 +2,7 @@ import Header from './Header/Header';
 import Main from './Main/Main';
 import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm';
-import PopupImage from './PopupImage/PopupImage';
+import ImagePopup from './ImagePopup/ImagePopup';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -183,7 +183,7 @@ function App() {
         isPopupOpen={isQuestionPopupOpen}
       />
 
-      <PopupImage card={selectedCard} isPopupOpen={isZoomPopup} onClose={handleWindowCloseClick} />
+      <ImagePopup card={selectedCard} isPopupOpen={isZoomPopup} onClose={handleWindowCloseClick} />
     </>
   );
 }
