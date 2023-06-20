@@ -12,6 +12,10 @@ function App() {
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
+  const [selectedCard, setSelectedCard] = useState([]);
+
+  const [isZoomPopup, setIsZoomPopup] = useState(false);
+
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
@@ -24,10 +28,17 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setIsZoomPopup(true);
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
+
+    setIsZoomPopup(false);
   }
   // function handleDeleteCard() {}
   // function handleCard() {}
@@ -40,6 +51,7 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick}
       />
 
       <Footer />
@@ -129,7 +141,7 @@ function App() {
         onClose={closeAllPopups}
       />
 
-      <PopupImage onClose={closeAllPopups} />
+      <PopupImage card={selectedCard} isPopupOpen={isZoomPopup} onClose={closeAllPopups} />
     </>
   );
 }
