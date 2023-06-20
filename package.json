@@ -11,7 +11,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://olyaolya13.github.io/mesto-react/",
+  "homepage": "https://Olyaolya13.github.io/mesto-react",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
