@@ -30,7 +30,7 @@
 
 - [Ссылка на макет в Figma продолжение](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9?type=design&node-id=0-1&t=opPM00qUqp8ymdpH-0)
 
-- [Ссылка на мой проект](https://olyaolya13.github.io/mesto/)
+- [Ссылка на мой проект](https://olyaolya13.github.io/mesto-react/)
 
 **Картинки**
 
