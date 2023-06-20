@@ -4,7 +4,7 @@
   font-size: 42px;
   font-weight: 500;
   line-height: 1.14em;
-  width: 300px;
+  /* width: 300px; */
   /*Реализовация переполнение блока с появляющимся многоточием в конце*/
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -15,7 +15,7 @@
   .content__title {
     font-size: 27px;
     line-height: 1.21em;
-    width: 200px;
+    /* width: 200px; */
   }
 }
 

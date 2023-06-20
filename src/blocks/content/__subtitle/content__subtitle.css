@@ -21,6 +21,6 @@
 
 @media (max-width: 610px) {
   .content__subtitle {
-    text-align: center;
+    /* text-align: center; */
   }
 }
