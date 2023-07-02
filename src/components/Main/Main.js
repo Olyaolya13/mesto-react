@@ -1,31 +1,9 @@
-import { useEffect, useState } from 'react';
-import api from '../../utils/api';
+import { useContext } from 'react';
 import Card from '../Card/Card';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashClick }) {
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userInfo, initialCards]) => {
-        const { name, about, avatar, _id } = userInfo;
-        setUserName(name);
-        setUserDescription(about);
-        setUserAvatar(avatar);
-        // initialCards.forEach(data => (data.myid = userInfo._id));
-        const updatedCards = initialCards.map(card => ({
-          ...card,
-          id: _id
-        }));
-        setCards(updatedCards);
-      })
-      .catch(error => {
-        console.log('Ошибка при получении информации:', error);
-      });
-  }, []);
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashClick, cards }) {
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <main>
@@ -33,7 +11,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashCli
         <div className="content__profile">
           <div className="content__avatar">
             <div
-              style={{ backgroundImage: `url(${userAvatar})` }}
+              style={{ backgroundImage: `url(${currentUser.avatar})` }}
               alt=""
               className="content__photo"
             />
@@ -41,7 +19,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashCli
           </div>
           <div className="content__edit">
             <div className="content__name">
-              <h1 className="content__title">{userName}</h1>
+              <h1 className="content__title">{currentUser.name}</h1>
               <button
                 type="button"
                 aria-label="Редактировать"
@@ -49,7 +27,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashCli
                 onClick={onEditProfile}
               />
             </div>
-            <p className="content__subtitle">{userDescription}</p>
+            <p className="content__subtitle">{currentUser.about}</p>
           </div>
         </div>
         <button
