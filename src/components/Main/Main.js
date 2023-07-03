@@ -14,6 +14,10 @@ function Main({
 }) {
   const currentUser = useContext(CurrentUserContext);
 
+  function handleContainerClick(evt) {
+    evt.stopPropagation();
+  }
+
   return (
     <main>
       <section className="content">

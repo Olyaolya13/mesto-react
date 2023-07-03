@@ -3,9 +3,10 @@ import Main from './Main/Main';
 import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm';
 import ImagePopup from './ImagePopup/ImagePopup';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import api from '../utils/api';
+import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
 
 function App() {
   //popup
@@ -41,19 +42,42 @@ function App() {
     setIsQuestionPopupOpen(true);
   }
 
-  function closeAllPopups() {
+  const closeAllPopups = useCallback(() => {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsZoomPopup(false);
     setIsQuestionPopupOpen(false);
-  }
+  }, []);
 
-  function handleWindowCloseClick(evt) {
-    if (evt.target === evt.currentTarget) {
-      closeAllPopups();
-    }
-  }
+  const handleWindowCloseClick = useCallback(
+    evt => {
+      if (evt.target === evt.currentTarget) {
+        closeAllPopups();
+      }
+    },
+    [closeAllPopups]
+  );
+
+  // const setCloseAllPopups = useCallback(() => {
+  //   setIsEditProfilePopupOpen(false);
+  //   setIsEditAvatarPopupOpen(false);
+  //   setIsAddPlacePopupOpen(false);
+  //   setIsZoomPopup(false);
+  //   setIsQuestionPopupOpen(false);
+  // }, []);
+
+  // const handleWindowCloseClick = useCallback(
+  //   evt => {
+  //     if (evt.target === evt.currentTarget) {
+  //       setCloseAllPopups();
+  //     }
+  //   },
+  //   [setCloseAllPopups]
+  // );
+  // const closeAllPopups = useCallback(() => {
+  //   setCloseAllPopups();
+  // }, [setCloseAllPopups]);
 
   function handleEscKey(event) {
     if (event.key === 'Escape') {
@@ -151,36 +175,7 @@ function App() {
 
         <Footer />
 
-        <PopupWithForm
-          name="profile-popup"
-          title="Редактировать профиль"
-          button="Сохранить"
-          isPopupOpen={isEditProfilePopupOpen}
-          onClose={handleWindowCloseClick}
-        >
-          <input
-            type="text"
-            placeholder="ФИО"
-            name="name"
-            className="popup__input popup__input_type_name"
-            id="user-name"
-            minLength={2}
-            maxLength={40}
-            required
-          />
-          <span className="popup__input-error user-name-error" />
-          <input
-            type="text"
-            placeholder="Должность"
-            name="about"
-            className="popup__input popup__input_type_occupation"
-            id="user-occupation"
-            minLength={2}
-            maxLength={200}
-            required
-          />
-          <span className="popup__input-error user-occupation-error" />
-        </PopupWithForm>
+        <EditProfilePopup isPopupOpen={isEditProfilePopupOpen} onClose={handleWindowCloseClick} />
 
         <PopupWithForm
           name="card-popup"
