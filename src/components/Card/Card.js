@@ -1,12 +1,16 @@
 import { useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Card({ card, onCardClick, onTrashClick, onCardLike }) {
+function Card({ card, onCardClick, onCardLike, onCardDelete, onTrashClick }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some(i => i._id === currentUser._id);
   const handleLikeClick = () => {
     onCardLike(card);
+  };
+  const handleDeleteClick = () => {
+    onTrashClick();
+    onCardDelete(card);
   };
 
   return (
@@ -28,7 +32,7 @@ function Card({ card, onCardClick, onTrashClick, onCardLike }) {
           <span className="card__heart-count">{card.likes.length}</span>
         </div>
       </div>
-      {isOwn && <button type="button" className="card__delete" onClick={onTrashClick} />}
+      {isOwn && <button type="button" className="card__delete" onClick={handleDeleteClick} />}
     </article>
   );
 }

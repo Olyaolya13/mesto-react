@@ -60,7 +60,7 @@ function App() {
       closeAllPopups();
     }
   }
-
+  //like
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
@@ -85,10 +85,18 @@ function App() {
           });
       }
     }
+  }
 
-    // api.changeLikeCardStatus(card._id, !isLiked).then(newCard => {
-    //   setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
-    // });
+  //delete card
+  function handleCardDelete(card) {
+    api
+      .removeCard(card._id)
+      .then(() => {
+        setCards(state => state.filter(c => c._id !== card._id));
+      })
+      .catch(error => {
+        console.log('Ошибка при удалении карточки:', error);
+      });
   }
 
   useEffect(() => {
@@ -138,6 +146,7 @@ function App() {
           onTrashClick={handleQuestionPopupOpen}
           cards={cards}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
 
         <Footer />
@@ -224,8 +233,8 @@ function App() {
           name="question-popup"
           title="Вы уверены"
           button="Да"
-          onClose={handleWindowCloseClick}
           isPopupOpen={isQuestionPopupOpen}
+          onClose={handleWindowCloseClick}
         />
 
         <ImagePopup
