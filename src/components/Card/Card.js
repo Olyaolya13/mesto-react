@@ -1,4 +1,14 @@
-function Card({ card, onCardClick, onTrashClick }) {
+import { useContext } from 'react';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+
+function Card({ card, onCardClick, onTrashClick, onCardLike }) {
+  const currentUser = useContext(CurrentUserContext);
+  const isOwn = card.owner._id === currentUser._id;
+  const isLiked = card.likes.some(i => i._id === currentUser._id);
+  const handleLikeClick = () => {
+    onCardLike(card);
+  };
+
   return (
     <article className="card">
       <div
@@ -10,11 +20,15 @@ function Card({ card, onCardClick, onTrashClick }) {
       <div className="card__text">
         <h2 className="card__title">{`${card.name}`}</h2>
         <div className="card__like">
-          <button type="button" className="card__heart" />
-          <span className="card__heart-count" />
+          <button
+            type="button"
+            className={`card__heart ${isLiked ? 'card__heart_active' : ''}`}
+            onClick={handleLikeClick}
+          />
+          <span className="card__heart-count">{card.likes.length}</span>
         </div>
       </div>
-      <button type="button" className="card__delete" onClick={onTrashClick} />
+      {isOwn && <button type="button" className="card__delete" onClick={onTrashClick} />}
     </article>
   );
 }

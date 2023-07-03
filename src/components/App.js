@@ -61,6 +61,36 @@ function App() {
     }
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    {
+      if (!isLiked) {
+        api
+          .addNewLike(card._id)
+          .then(newCard => {
+            setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
+          })
+          .catch(error => {
+            console.log('Ошибка при добавлении лайка:', error);
+          });
+      } else {
+        api
+          .removeLike(card._id)
+          .then(newCard => {
+            setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
+          })
+          .catch(error => {
+            console.log('Ошибка при удалении лайка:', error);
+          });
+      }
+    }
+
+    // api.changeLikeCardStatus(card._id, !isLiked).then(newCard => {
+    //   setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
+    // });
+  }
+
   useEffect(() => {
     if (
       isEditProfilePopupOpen ||
@@ -107,6 +137,7 @@ function App() {
           onCardClick={handleCardClick}
           onTrashClick={handleQuestionPopupOpen}
           cards={cards}
+          onCardLike={handleCardLike}
         />
 
         <Footer />

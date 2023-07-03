@@ -2,7 +2,15 @@ import { useContext } from 'react';
 import Card from '../Card/Card';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashClick, cards }) {
+function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onTrashClick,
+  cards,
+  onCardLike
+}) {
   const currentUser = useContext(CurrentUserContext);
 
   return (
@@ -39,7 +47,13 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashCli
       </section>
       <section className="cards">
         {cards.map(card => (
-          <Card key={card._id} card={card} onCardClick={onCardClick} onTrashClick={onTrashClick} />
+          <Card
+            key={card._id}
+            card={card}
+            onCardClick={onCardClick}
+            onTrashClick={onTrashClick}
+            onCardLike={onCardLike}
+          />
         ))}
       </section>
     </main>
