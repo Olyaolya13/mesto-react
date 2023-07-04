@@ -7,9 +7,9 @@ function Main({
   onAddPlace,
   onEditAvatar,
   onCardClick,
-  onTrashClick,
   cards,
   onCardLike,
+  onQuestuon,
   onCardDelete
 }) {
   const currentUser = useContext(CurrentUserContext);
@@ -52,9 +52,9 @@ function Main({
             key={card._id}
             card={card}
             onCardClick={onCardClick}
-            onTrashClick={onTrashClick}
             onCardLike={onCardLike}
             onCardDelete={onCardDelete}
+            onQuestuon={onQuestuon}
           />
         ))}
       </section>

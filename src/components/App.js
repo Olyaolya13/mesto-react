@@ -133,7 +133,11 @@ function App() {
   }
 
   //delete card
-  function handleCardDelete(card) {
+  function handleCardDelete() {
+    handleQuestionPopupOpen();
+  }
+
+  function handleConfirmDelete(card) {
     api
       .removeCard(card._id)
       .then(() => {
@@ -174,8 +178,8 @@ function App() {
         setCurrentUser(userInfo);
         setCards(initialCards);
       })
-      .catch(error => {
-        console.log('Ошибка при получении информации:', error);
+      .catch(err => {
+        console.log('Ошибка при получении информации:', err);
       });
   }, []);
   return (
@@ -188,10 +192,10 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          onTrashClick={handleQuestionPopupOpen}
           cards={cards}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handleConfirmDelete}
+          onQuestuon={handleCardDelete}
         />
 
         <Footer />

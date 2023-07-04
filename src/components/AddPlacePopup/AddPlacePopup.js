@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import FormValidation from '../FormValidation/FormValidation';
 
 function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+
+  const nameValidation = FormValidation();
+  const linkValidation = FormValidation();
+
   const handleSubmit = evt => {
     evt.preventDefault();
     onAddPlace({
@@ -37,10 +42,15 @@ function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
         minLength={2}
         maxLength={30}
         value={name}
-        onChange={evt => setName(evt.target.value)}
+        onChange={evt => {
+          setName(evt.target.value);
+          nameValidation.handleChange(evt);
+        }}
         required
       />
-      <span className="popup__input-error card-name-error" />
+      {nameValidation.error && (
+        <span className="popup__input-error card-name-error">{nameValidation.error}</span>
+      )}
       <input
         type="url"
         placeholder="Ссылка на картинку"
@@ -48,10 +58,15 @@ function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
         className="popup__input popup__input_type_link"
         id="card-link"
         value={link}
-        onChange={evt => setLink(evt.target.value)}
+        onChange={evt => {
+          setLink(evt.target.value);
+          linkValidation.handleChange(evt);
+        }}
         required
       />
-      <span className="popup__input-error card-link-error" />
+      {linkValidation.error && (
+        <span className="popup__input-error card-link-error">{linkValidation.error}</span>
+      )}
     </PopupWithForm>
   );
 }

@@ -1,8 +1,11 @@
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { useEffect, useRef } from 'react';
+import FormValidation from '../FormValidation/FormValidation';
 
 function EditAvatarPopup({ isPopupOpen, onClose, onUpdateAvatar }) {
   const avatarRef = useRef();
+
+  const avatarValidation = FormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -28,9 +31,12 @@ function EditAvatarPopup({ isPopupOpen, onClose, onUpdateAvatar }) {
         className="popup__input popup__input_type_avatar"
         id="user-avatar"
         ref={avatarRef}
+        onChange={evt => avatarValidation.handleChange(evt)}
         required
       />
-      <span className="popup__input-error user-avatar-error" />
+      {avatarValidation.error && (
+        <span className="popup__input-error user-avatar-error">{avatarValidation.error}</span>
+      )}
     </PopupWithForm>
   );
 }

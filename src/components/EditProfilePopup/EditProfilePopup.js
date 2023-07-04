@@ -1,11 +1,16 @@
 import { useState, useEffect, useContext } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import FormValidation from '../FormValidation/FormValidation';
 
 function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const currentUser = useContext(CurrentUserContext);
+
+  const nameValidation = FormValidation();
+  const aboutValidation = FormValidation();
+
   const handleSubmit = evt => {
     evt.preventDefault();
     onUpdateUser({
@@ -37,10 +42,15 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
         minLength={2}
         maxLength={40}
         value={name}
-        onChange={evt => setName(evt.target.value)}
+        onChange={evt => {
+          nameValidation.handleChange(evt);
+          setName(evt.target.value);
+        }}
         required
       />
-      <span className="popup__input-error user-name-error" />
+      {nameValidation.error && (
+        <span className="popup__input-error user-name-error">{nameValidation.error}</span>
+      )}
       <input
         type="text"
         placeholder="Должность"
@@ -50,10 +60,15 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
         minLength={2}
         maxLength={200}
         value={description}
-        onChange={evt => setDescription(evt.target.value)}
+        onChange={evt => {
+          aboutValidation.handleChange(evt);
+          setDescription(evt.target.value);
+        }}
         required
       />
-      <span className="popup__input-error user-occupation-error" />
+      {aboutValidation.error && (
+        <span className="popup__input-error user-occupation-error">{aboutValidation.error}</span>
+      )}
     </PopupWithForm>
   );
 }
