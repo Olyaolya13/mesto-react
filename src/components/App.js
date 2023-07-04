@@ -6,7 +6,9 @@ import ImagePopup from './ImagePopup/ImagePopup';
 import { useState, useEffect, useCallback } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import api from '../utils/api';
+
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup';
 
 function App() {
   //popup
@@ -75,6 +77,19 @@ function App() {
       })
       .catch(error => {
         console.log('Ошибка при обновлении информации пользователя:', error);
+      });
+  }
+
+  // Update user avatar
+  function handleUpdateAvatar(user) {
+    api
+      .editAvatar(user)
+      .then(data => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch(error => {
+        console.log('Ошибка при обновлении аватара:', error);
       });
   }
 
@@ -175,6 +190,12 @@ function App() {
           onUpdateUser={handleUpdateUser}
         />
 
+        <EditAvatarPopup
+          isPopupOpen={isEditAvatarPopupOpen}
+          onClose={handleWindowCloseClick}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+
         <PopupWithForm
           name="card-popup"
           title="Новое место"
@@ -202,24 +223,6 @@ function App() {
             required
           />
           <span className="popup__input-error card-link-error" />
-        </PopupWithForm>
-
-        <PopupWithForm
-          name="avatar-popup"
-          title="Обновить аватар"
-          button="Сохранить"
-          isPopupOpen={isEditAvatarPopupOpen}
-          onClose={handleWindowCloseClick}
-        >
-          <input
-            type="url"
-            placeholder="Ссылка на аватар"
-            name="avatar"
-            className="popup__input popup__input_type_avatar"
-            id="user-avatar"
-            required
-          />
-          <span className="popup__input-error user-avatar-error" />
         </PopupWithForm>
 
         <PopupWithForm
