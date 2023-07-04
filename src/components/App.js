@@ -20,28 +20,28 @@ function App() {
   const [currentUser, setCurrentUser] = useState([]);
   //cards
   const [cards, setCards] = useState([]);
-
+  // Open Edit Profile Popup
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
-
+  // Open Edit Avatar Popup
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
-
+  // Open Add Place Popup
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
-
+  // Open Zoom Popup with selected card
   function handleCardClick(card) {
     setSelectedCard(card);
     setIsZoomPopup(true);
   }
-
+  // Open Question Popup
   function handleQuestionPopupOpen() {
     setIsQuestionPopupOpen(true);
   }
-
+  // Close all popups
   const closeAllPopups = useCallback(() => {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
@@ -49,7 +49,7 @@ function App() {
     setIsZoomPopup(false);
     setIsQuestionPopupOpen(false);
   }, []);
-
+  // Close popups when clicking outside the popup
   const handleWindowCloseClick = useCallback(
     evt => {
       if (evt.target === evt.currentTarget) {
@@ -58,33 +58,27 @@ function App() {
     },
     [closeAllPopups]
   );
-
-  // const setCloseAllPopups = useCallback(() => {
-  //   setIsEditProfilePopupOpen(false);
-  //   setIsEditAvatarPopupOpen(false);
-  //   setIsAddPlacePopupOpen(false);
-  //   setIsZoomPopup(false);
-  //   setIsQuestionPopupOpen(false);
-  // }, []);
-
-  // const handleWindowCloseClick = useCallback(
-  //   evt => {
-  //     if (evt.target === evt.currentTarget) {
-  //       setCloseAllPopups();
-  //     }
-  //   },
-  //   [setCloseAllPopups]
-  // );
-  // const closeAllPopups = useCallback(() => {
-  //   setCloseAllPopups();
-  // }, [setCloseAllPopups]);
-
+  // Close popups when pressing the Escape key
   function handleEscKey(event) {
     if (event.key === 'Escape') {
       closeAllPopups();
     }
   }
-  //like
+
+  // Update user information
+  function handleUpdateUser(userInfo) {
+    api
+      .editProfile(userInfo)
+      .then(data => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch(error => {
+        console.log('Ошибка при обновлении информации пользователя:', error);
+      });
+  }
+
+  // Handle like on a card
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
@@ -175,7 +169,11 @@ function App() {
 
         <Footer />
 
-        <EditProfilePopup isPopupOpen={isEditProfilePopupOpen} onClose={handleWindowCloseClick} />
+        <EditProfilePopup
+          isPopupOpen={isEditProfilePopupOpen}
+          onClose={handleWindowCloseClick}
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           name="card-popup"

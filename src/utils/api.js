@@ -26,6 +26,7 @@ class Api {
       headers: this._headers
     });
   }
+
   //аватар
   editAvatar(user) {
     return this._request(`${this._baseUrl}/users/me/avatar`, {
