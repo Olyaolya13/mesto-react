@@ -1,14 +1,14 @@
+import { useState, useEffect, useCallback } from 'react';
+import api from '../utils/api';
 import Header from './Header/Header';
 import Main from './Main/Main';
 import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm';
 import ImagePopup from './ImagePopup/ImagePopup';
-import { useState, useEffect, useCallback } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
-import api from '../utils/api';
-
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
 
 function App() {
   //popup
@@ -75,21 +75,33 @@ function App() {
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch(error => {
-        console.log('Ошибка при обновлении информации пользователя:', error);
+      .catch(err => {
+        console.log(err);
       });
   }
 
   // Update user avatar
-  function handleUpdateAvatar(user) {
+  function handleUpdateAvatar(avatar) {
     api
-      .editAvatar(user)
+      .editAvatar(avatar)
       .then(data => {
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch(error => {
-        console.log('Ошибка при обновлении аватара:', error);
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  //add card
+  function handleAddPlace(newCard) {
+    api
+      .addNewCard(newCard)
+      .then(card => {
+        setCards(state => [card, ...state]);
+        closeAllPopups();
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
@@ -104,8 +116,8 @@ function App() {
           .then(newCard => {
             setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
           })
-          .catch(error => {
-            console.log('Ошибка при добавлении лайка:', error);
+          .catch(err => {
+            console.log(err);
           });
       } else {
         api
@@ -113,8 +125,8 @@ function App() {
           .then(newCard => {
             setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
           })
-          .catch(error => {
-            console.log('Ошибка при удалении лайка:', error);
+          .catch(err => {
+            console.log(err);
           });
       }
     }
@@ -127,8 +139,8 @@ function App() {
       .then(() => {
         setCards(state => state.filter(c => c._id !== card._id));
       })
-      .catch(error => {
-        console.log('Ошибка при удалении карточки:', error);
+      .catch(err => {
+        console.log(err);
       });
   }
 
@@ -196,41 +208,10 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
         />
 
-        <PopupWithForm
-          name="card-popup"
-          title="Новое место"
-          button="Создать"
+        <AddPlacePopup
           isPopupOpen={isAddPlacePopupOpen}
           onClose={handleWindowCloseClick}
-        >
-          <input
-            type="text"
-            placeholder="Название"
-            name="name"
-            className="popup__input popup__input_type_card"
-            id="card-name"
-            minLength={2}
-            maxLength={30}
-            required
-          />
-          <span className="popup__input-error card-name-error" />
-          <input
-            type="url"
-            placeholder="Ссылка на картинку"
-            name="link"
-            className="popup__input popup__input_type_link"
-            id="card-link"
-            required
-          />
-          <span className="popup__input-error card-link-error" />
-        </PopupWithForm>
-
-        <PopupWithForm
-          name="question-popup"
-          title="Вы уверены"
-          button="Да"
-          isPopupOpen={isQuestionPopupOpen}
-          onClose={handleWindowCloseClick}
+          onAddPlace={handleAddPlace}
         />
 
         <ImagePopup
