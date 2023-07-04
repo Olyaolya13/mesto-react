@@ -213,6 +213,13 @@ function App() {
           onClose={handleWindowCloseClick}
           onAddPlace={handleAddPlace}
         />
+        <PopupWithForm
+          name="question-popup"
+          title="Вы уверены"
+          button="Да"
+          onClose={handleWindowCloseClick}
+          isPopupOpen={isQuestionPopupOpen}
+        />
 
         <ImagePopup
           card={selectedCard}
