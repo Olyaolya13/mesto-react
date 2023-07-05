@@ -8,8 +8,7 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
   const [description, setDescription] = useState('');
   const currentUser = useContext(CurrentUserContext);
 
-  const nameValidation = FormValidation();
-  const aboutValidation = FormValidation();
+  const { value, error, isValid, input, handleChange } = FormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -43,14 +42,14 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
         maxLength={40}
         value={name}
         onChange={evt => {
-          nameValidation.handleChange(evt);
+          handleChange(evt);
           setName(evt.target.value);
         }}
         required
       />
-      {nameValidation.error && (
-        <span className="popup__input-error user-name-error">{nameValidation.error}</span>
-      )}
+
+      <span className="popup__input-error user-name-error">{error.name}</span>
+
       <input
         type="text"
         placeholder="Должность"
@@ -61,14 +60,12 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
         maxLength={200}
         value={description}
         onChange={evt => {
-          aboutValidation.handleChange(evt);
+          handleChange(evt);
           setDescription(evt.target.value);
         }}
         required
       />
-      {aboutValidation.error && (
-        <span className="popup__input-error user-occupation-error">{aboutValidation.error}</span>
-      )}
+      <span className="popup__input-error user-occupation-error">{error.about}</span>
     </PopupWithForm>
   );
 }
