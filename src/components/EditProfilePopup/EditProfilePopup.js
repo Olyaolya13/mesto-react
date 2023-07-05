@@ -19,9 +19,12 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
   };
 
   useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
+    if (!isPopupOpen) {
+      // Присвоить значения текущего пользователя при закрытии попапа без сохранения
+      setName(currentUser.name);
+      setDescription(currentUser.about);
+    }
+  }, [isPopupOpen, currentUser]);
 
   return (
     <PopupWithForm
