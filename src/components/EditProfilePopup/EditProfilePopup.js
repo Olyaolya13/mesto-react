@@ -20,7 +20,6 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
 
   useEffect(() => {
     if (!isPopupOpen) {
-      // Присвоить значения текущего пользователя при закрытии попапа без сохранения
       setName(currentUser.name);
       setDescription(currentUser.about);
     }
