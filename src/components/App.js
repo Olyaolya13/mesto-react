@@ -222,7 +222,6 @@ function App() {
           title="Вы уверены"
           button="Да"
           onClose={handleWindowCloseClick}
-          isPopupOpen={isQuestionPopupOpen}
         />
 
         <ImagePopup

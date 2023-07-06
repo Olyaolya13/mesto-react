@@ -5,14 +5,17 @@ import FormValidation from '../FormValidation/FormValidation';
 function EditAvatarPopup({ isPopupOpen, onClose, onUpdateAvatar }) {
   const avatarRef = useRef();
 
-  const avatarValidation = FormValidation();
+  const { error, isValid, input, handleChange } = FormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();
     onUpdateAvatar({ avatar: avatarRef.current.value });
   };
+
   useEffect(() => {
-    avatarRef.current.value = '';
+    if (!isPopupOpen) {
+      avatarRef.current.value = '';
+    }
   }, [isPopupOpen]);
 
   return (
@@ -23,20 +26,22 @@ function EditAvatarPopup({ isPopupOpen, onClose, onUpdateAvatar }) {
       isPopupOpen={isPopupOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <input
         type="url"
         placeholder="Ссылка на аватар"
         name="avatar"
-        className="popup__input popup__input_type_avatar"
+        className={`popup__input popup__input_type_avatar ${
+          input.avatar === undefined || input.avatar ? '' : 'popup__input-error_type_'
+        }`}
         id="user-avatar"
         ref={avatarRef}
-        onChange={evt => avatarValidation.handleChange(evt)}
+        onChange={evt => handleChange(evt)}
         required
       />
-      {avatarValidation.error && (
-        <span className="popup__input-error user-avatar-error">{avatarValidation.error}</span>
-      )}
+
+      <span className="popup__input-error user-avatar-error">{error.avatar}</span>
     </PopupWithForm>
   );
 }

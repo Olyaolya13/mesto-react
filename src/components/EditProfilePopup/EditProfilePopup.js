@@ -8,7 +8,7 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
   const [description, setDescription] = useState('');
   const currentUser = useContext(CurrentUserContext);
 
-  const { value, error, isValid, input, handleChange } = FormValidation();
+  const { error, isValid, input, handleChange } = FormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();

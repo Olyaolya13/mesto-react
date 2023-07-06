@@ -6,8 +6,7 @@ function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
-  const nameValidation = FormValidation();
-  const linkValidation = FormValidation();
+  const { error, isValid, input, handleChange } = FormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -32,41 +31,45 @@ function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
       isPopupOpen={isPopupOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <input
         type="text"
         placeholder="Название"
         name="name"
-        className="popup__input popup__input_type_card"
+        className={`popup__input popup__input_type_card ${
+          input.name === undefined || input.name ? '' : 'popup__input-error_type_'
+        }`}
         id="card-name"
         minLength={2}
         maxLength={30}
         value={name}
         onChange={evt => {
+          handleChange(evt);
           setName(evt.target.value);
-          nameValidation.handleChange(evt);
         }}
         required
       />
-      {nameValidation.error && (
-        <span className="popup__input-error card-name-error">{nameValidation.error}</span>
-      )}
+
+      <span className="popup__input-error card-name-error">{error.name}</span>
+
       <input
         type="url"
         placeholder="Ссылка на картинку"
         name="link"
-        className="popup__input popup__input_type_link"
+        className={`popup__input popup__input_type_link ${
+          input.link === undefined || input.link ? '' : 'popup__input-error_type_'
+        }`}
         id="card-link"
         value={link}
         onChange={evt => {
+          handleChange(evt);
           setLink(evt.target.value);
-          linkValidation.handleChange(evt);
         }}
         required
       />
-      {linkValidation.error && (
-        <span className="popup__input-error card-link-error">{linkValidation.error}</span>
-      )}
+
+      <span className="popup__input-error card-link-error">{error.link}</span>
     </PopupWithForm>
   );
 }
