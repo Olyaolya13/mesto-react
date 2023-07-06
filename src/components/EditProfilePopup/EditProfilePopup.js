@@ -33,12 +33,15 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
       isPopupOpen={isPopupOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <input
         type="text"
         placeholder="ФИО"
         name="name"
-        className="popup__input popup__input_type_name"
+        className={`popup__input popup__input_type_name ${
+          input.name === undefined || input.name ? '' : 'popup__input-error_type_'
+        }`}
         id="user-name"
         minLength={2}
         maxLength={40}
@@ -56,7 +59,9 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
         type="text"
         placeholder="Должность"
         name="about"
-        className="popup__input popup__input_type_occupation"
+        className={`popup__input popup__input_type_occupation ${
+          input.about === undefined || input.about ? '' : 'popup__input-error_type_'
+        }`}
         id="user-occupation"
         minLength={2}
         maxLength={200}

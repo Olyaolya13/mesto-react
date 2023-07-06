@@ -1,4 +1,4 @@
-function PopupWithForm({ name, title, button, children, isPopupOpen, onClose, onSubmit }) {
+function PopupWithForm({ name, title, button, children, isPopupOpen, onClose, onSubmit, isValid }) {
   return (
     <div
       className={`popup popup_type_${name} ${isPopupOpen ? 'popup_opened' : ''}`}
@@ -8,7 +8,11 @@ function PopupWithForm({ name, title, button, children, isPopupOpen, onClose, on
         <h2 className="popup__title">{title}</h2>
         <form name={name} className="popup__form" noValidate="" onSubmit={onSubmit}>
           {children}
-          <button type="submit" aria-label="Сохранить" className="popup__button">
+          <button
+            type="submit"
+            aria-label="Сохранить"
+            className={`popup__button ${!isValid ? 'popup__button_disabled' : ''}`}
+          >
             {button}
           </button>
         </form>
