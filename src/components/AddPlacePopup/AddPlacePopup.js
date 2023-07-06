@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import FormValidation from '../../hooks/FormValidation/FormValidation';
+import FormValidation from '../../hooks/useFormValidation/useFormValidation';
 
 function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
   const [name, setName] = useState('');
