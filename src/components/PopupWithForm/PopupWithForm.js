@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 
-function PopupWithForm({ name, title, button, children, isPopupOpen, onClose, onSubmit, isValid }) {
+function PopupWithForm({
+  name,
+  title,
+  button,
+  children,
+  isPopupOpen,
+  onClose,
+  onSubmit,
+  isValid = true
+}) {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleFormSubmit = evt => {

@@ -149,17 +149,20 @@ function App() {
   }
 
   useEffect(() => {
+    const handleEscKey = event => {
+      if (event.key === 'Escape') {
+        closeAllPopups();
+      }
+    };
     if (
       isEditProfilePopupOpen ||
       isAddPlacePopupOpen ||
       isEditAvatarPopupOpen ||
       isZoomPopup ||
       isQuestionPopupOpen
-    ) {
+    )
       document.addEventListener('keydown', handleEscKey);
-    } else {
-      document.removeEventListener('keydown', handleEscKey);
-    }
+    else document.removeEventListener('keydown', handleEscKey);
 
     return () => {
       document.removeEventListener('keydown', handleEscKey);
@@ -169,7 +172,8 @@ function App() {
     isAddPlacePopupOpen,
     isEditAvatarPopupOpen,
     isZoomPopup,
-    isQuestionPopupOpen
+    isQuestionPopupOpen,
+    closeAllPopups
   ]);
 
   useEffect(() => {
