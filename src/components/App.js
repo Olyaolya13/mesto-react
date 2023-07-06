@@ -19,7 +19,7 @@ function App() {
   const [isZoomPopup, setIsZoomPopup] = useState(false);
   const [isQuestionPopupOpen, setIsQuestionPopupOpen] = useState(false);
   //context
-  const [currentUser, setCurrentUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   //cards
   const [cards, setCards] = useState([]);
   // Open Edit Profile Popup
