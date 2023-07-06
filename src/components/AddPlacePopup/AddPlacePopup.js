@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import FormValidation from '../../hooks/useFormValidation/useFormValidation';
+import useFormValidation from '../../hooks/useFormValidation/useFormValidation';
 
 function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
-  const { error, isValid, input, handleChange } = FormValidation();
+  const { error, isValid, input, handleChange, resetValidation } = useFormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -20,8 +20,9 @@ function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
     if (!isPopupOpen) {
       setName('');
       setLink('');
+      resetValidation();
     }
-  }, [isPopupOpen]);
+  }, [isPopupOpen, resetValidation]);
 
   return (
     <PopupWithForm

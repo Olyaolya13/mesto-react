@@ -1,11 +1,11 @@
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { useEffect, useRef } from 'react';
-import FormValidation from '../../hooks/useFormValidation/useFormValidation';
+import useFormValidation from '../../hooks/useFormValidation/useFormValidation';
 
 function EditAvatarPopup({ isPopupOpen, onClose, onUpdateAvatar }) {
   const avatarRef = useRef();
 
-  const { error, isValid, input, handleChange } = FormValidation();
+  const { error, isValid, input, handleChange, resetValidation } = useFormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -15,8 +15,9 @@ function EditAvatarPopup({ isPopupOpen, onClose, onUpdateAvatar }) {
   useEffect(() => {
     if (!isPopupOpen) {
       avatarRef.current.value = '';
+      resetValidation();
     }
-  }, [isPopupOpen]);
+  }, [isPopupOpen, resetValidation]);
 
   return (
     <PopupWithForm

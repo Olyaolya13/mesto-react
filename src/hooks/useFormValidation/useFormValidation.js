@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
-const FormValidation = () => {
+const useFormValidation = () => {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -24,23 +24,20 @@ const FormValidation = () => {
     setIsValid(form.checkValidity());
   };
 
-  const validateInput = inputElement => {
-    if (inputElement.validity.valid) {
-      setError('');
-      setIsValid(true);
-    } else {
-      setError(inputElement.validationMessage);
-      setIsValid(false);
-    }
-  };
-
+  const resetValidation = useCallback(() => {
+    setValue('');
+    setError('');
+    setIsValid(false);
+    setInput({});
+  }, []);
   return {
     value,
     error,
     isValid,
     input,
-    handleChange
+    handleChange,
+    resetValidation
   };
 };
 
-export default FormValidation;
+export default useFormValidation;

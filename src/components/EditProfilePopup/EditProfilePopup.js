@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import FormValidation from '../../hooks/useFormValidation/useFormValidation';
+import useFormValidation from '../../hooks/useFormValidation/useFormValidation';
 
 function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const currentUser = useContext(CurrentUserContext);
 
-  const { error, isValid, input, handleChange } = FormValidation();
+  const { error, isValid, input, handleChange, resetValidation } = useFormValidation();
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -22,8 +22,9 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
     if (!isPopupOpen) {
       setName(currentUser.name);
       setDescription(currentUser.about);
+      resetValidation();
     }
-  }, [isPopupOpen, currentUser]);
+  }, [isPopupOpen, currentUser, resetValidation]);
 
   return (
     <PopupWithForm
