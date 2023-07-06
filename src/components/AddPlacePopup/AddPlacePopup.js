@@ -43,7 +43,7 @@ function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
         id="card-name"
         minLength={2}
         maxLength={30}
-        value={name}
+        value={name || ''}
         onChange={evt => {
           handleChange(evt);
           setName(evt.target.value);
@@ -61,7 +61,7 @@ function AddPlacePopup({ isPopupOpen, onClose, onAddPlace }) {
           input.link === undefined || input.link ? '' : 'popup__input-error_type_'
         }`}
         id="card-link"
-        value={link}
+        value={link || ''}
         onChange={evt => {
           handleChange(evt);
           setLink(evt.target.value);

@@ -45,7 +45,7 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
         id="user-name"
         minLength={2}
         maxLength={40}
-        value={name}
+        value={name || ''}
         onChange={evt => {
           handleChange(evt);
           setName(evt.target.value);
@@ -65,7 +65,7 @@ function EditProfilePopup({ isPopupOpen, onClose, onUpdateUser }) {
         id="user-occupation"
         minLength={2}
         maxLength={200}
-        value={description}
+        value={description || ''}
         onChange={evt => {
           handleChange(evt);
           setDescription(evt.target.value);
