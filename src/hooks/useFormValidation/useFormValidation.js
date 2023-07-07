@@ -1,17 +1,14 @@
 import { useState, useCallback } from 'react';
 
 const useFormValidation = () => {
-  const [value, setValue] = useState('');
-  const [error, setError] = useState('');
+  const [value, setValue] = useState({});
+  const [error, setError] = useState({});
   const [isValid, setIsValid] = useState(false);
-  const [input, setInput] = useState([]);
+  const [input, setInput] = useState({});
 
   const handleChange = evt => {
-    const name = evt.target.name;
-    const value = evt.target.value;
-    const validationMessage = evt.target.validationMessage;
-    const isValid = evt.target.validity.valid;
-    const form = evt.target.form;
+    const { name, value, validationMessage, form, valid: isValid } = evt.target;
+
     setValue(obj => {
       return { ...obj, [name]: value };
     });
@@ -25,11 +22,12 @@ const useFormValidation = () => {
   };
 
   const resetValidation = useCallback(() => {
-    setValue('');
-    setError('');
+    setValue({});
+    setError({});
     setIsValid(false);
     setInput({});
   }, []);
+
   return {
     value,
     error,
